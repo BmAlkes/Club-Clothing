@@ -1,12 +1,14 @@
 import { FunctionComponent, useState } from 'react'
 
+// components
+import Header from './components/header/header'
+
 interface AppProps {
   message?: string
 }
 
 const App: FunctionComponent<AppProps> = ({ message }) => {
-  const [name, setName] = useState<string>('')
-  return <h1>Hello World!</h1>
+  return <Header />
 }
 
 export default App
