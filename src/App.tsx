@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react'
+import { FunctionComponent } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // Pages
