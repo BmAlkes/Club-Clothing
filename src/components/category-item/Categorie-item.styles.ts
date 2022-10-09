@@ -1,4 +1,11 @@
-.category-item-container {
+import styled from 'styled-components'
+import Colors from '../../theme/theme.colors'
+
+interface CategorieItemContainerProps {
+  backgroundImage: string
+}
+
+export const CategorieItemContainer = styled.div<CategorieItemContainerProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,10 +20,11 @@
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
   background-color: rgba(0, 0, 0, 0.3);
   background-blend-mode: color;
-}
+  background-image: ${(props) => `url(${props.backgroundImage}) `};
+`
 
-.category-name {
-  color: #f8f9fa;
+export const CategoryName = styled.div`
+  color: ${Colors.background.dark};
   text-align: center;
   background: rgba(233, 236, 239, 0.45);
   padding-top: 10px;
@@ -27,13 +35,11 @@
   border: 1px solid #212529;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.5s ease;
-}
-
-.category-name:hover {
-  cursor: pointer;
-  background: rgba(233, 236, 239, 0.55);
-}
-
-.category-name p:nth-child(1) {
-  font-weight: 600;
-}
+  :hover {
+    cursor: pointer;
+    background: rgba(233, 236, 239, 0.55);
+    p:nth-child(1) {
+      font-weight: 600;
+    }
+  }
+`
