@@ -1,10 +1,11 @@
 import React from 'react'
 import { BsCart3 } from 'react-icons/bs'
+import { HeaderContainer } from './Header.styles'
 import './header.styles.css'
 
 const Header = () => {
   return (
-    <div className="header-container">
+    <HeaderContainer>
       <h2 className="header-title">CLUB CLOTHINGS</h2>
 
       <div className="header-items">
@@ -16,7 +17,7 @@ const Header = () => {
           <p style={{ marginLeft: 10 }}>5</p>
         </div>
       </div>
-    </div>
+    </HeaderContainer>
   )
 }
 
