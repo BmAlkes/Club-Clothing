@@ -4,6 +4,7 @@ import CustomButton from '../../components/custom-buttton/CustomButton'
 import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
+import validator from 'validator'
 import {
   LoginContainer,
   LoginHeadline,
@@ -13,6 +14,7 @@ import {
 } from './Login.styles'
 import CustomInput from '../../components/custom-input/CustomInput'
 import { isExternalModule } from 'typescript'
+import InputErrorMessage from '../../components/input-error-component/InputError'
 
 const Login = () => {
   const {
@@ -41,8 +43,18 @@ const Login = () => {
             <CustomInput
               hasError={!!errors?.email}
               placeholder="Enter your email"
-              {...register('email', { required: true })}
+              {...register('email', {
+                required: true,
+                validate: (value) => {
+                  return validator.isEmail(value)
+                }
+              })}
             />
+            {errors?.email?.type === 'validate' && (
+              <InputErrorMessage>
+                Please insert a validate email
+              </InputErrorMessage>
+            )}
           </LoginInputContainer>
           <LoginInputContainer>
             <p>Password</p>
@@ -51,6 +63,9 @@ const Login = () => {
               placeholder="Enter your password"
               {...register('password', { required: true })}
             />
+            {errors?.password?.type === 'required' && (
+              <InputErrorMessage>Password required</InputErrorMessage>
+            )}
           </LoginInputContainer>
           <CustomButton
             startIcon={<FiLogIn size={18} />}
