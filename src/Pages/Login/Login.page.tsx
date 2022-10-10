@@ -3,6 +3,7 @@ import Header from '../../components/header/header'
 import CustomButton from '../../components/custom-buttton/CustomButton'
 import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
+import { useForm } from 'react-hook-form'
 import {
   LoginContainer,
   LoginHeadline,
@@ -11,8 +12,19 @@ import {
   LoginSubtitle
 } from './Login.styles'
 import CustomInput from '../../components/custom-input/CustomInput'
+import { isExternalModule } from 'typescript'
 
 const Login = () => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm()
+
+  const handleSubmitPress = (data: any) => {
+    console.log({ data })
+  }
+  console.log({ errors })
   return (
     <>
       <Header />
@@ -26,13 +38,25 @@ const Login = () => {
           <LoginSubtitle>or enter with your email:</LoginSubtitle>
           <LoginInputContainer>
             <p>Email</p>
-            <CustomInput placeholder="Enter your email" />
+            <CustomInput
+              hasError={!!errors?.email}
+              placeholder="Enter your email"
+              {...register('email', { required: true })}
+            />
           </LoginInputContainer>
           <LoginInputContainer>
             <p>Password</p>
-            <CustomInput placeholder="Enter your password" />
+            <CustomInput
+              hasError={!!errors?.password}
+              placeholder="Enter your password"
+              {...register('password', { required: true })}
+            />
           </LoginInputContainer>
-          <CustomButton startIcon={<FiLogIn size={18} />}>Enter</CustomButton>
+          <CustomButton
+            startIcon={<FiLogIn size={18} />}
+            onClick={() => handleSubmit(handleSubmitPress)()}>
+            Enter
+          </CustomButton>
         </LoginContent>
       </LoginContainer>
     </>
