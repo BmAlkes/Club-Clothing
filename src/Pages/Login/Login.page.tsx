@@ -1,4 +1,3 @@
-import React from 'react'
 import Header from '../../components/header/header'
 import CustomButton from '../../components/custom-buttton/CustomButton'
 import { BsGoogle } from 'react-icons/bs'
@@ -15,6 +14,11 @@ import {
 import CustomInput from '../../components/custom-input/CustomInput'
 import InputErrorMessage from '../../components/input-error-component/InputError'
 
+interface LoginForm {
+  email: string
+  password: string
+}
+
 const Login = () => {
   const {
     register,
@@ -22,7 +26,7 @@ const Login = () => {
     handleSubmit
   } = useForm()
 
-  const handleSubmitPress = (data: any) => {
+  const handleSubmitPress = (data: LoginForm) => {
     console.log({ data })
   }
   console.log({ errors })
