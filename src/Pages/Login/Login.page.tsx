@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../../components/header/header'
 import CustomButton from '../../components/custom-buttton/CustomButton'
 import { BsGoogle } from 'react-icons/bs'
+import { FiLogIn } from 'react-icons/fi'
 import {
   LoginContainer,
   LoginHeadline,
@@ -9,6 +10,7 @@ import {
   LoginInputContainer,
   LoginSubtitle
 } from './Login.styles'
+import CustomInput from '../../components/custom-input/CustomInput'
 
 const Login = () => {
   return (
@@ -22,8 +24,13 @@ const Login = () => {
             Login with Google
           </CustomButton>
           <LoginSubtitle>or enter with your email:</LoginSubtitle>
-          <LoginInputContainer>{/*Email Input*/}</LoginInputContainer>
-          <LoginInputContainer>{/*password Input*/}</LoginInputContainer>
+          <LoginInputContainer>
+            <CustomInput placeholder="Enter your email" />
+          </LoginInputContainer>
+          <LoginInputContainer>
+            <CustomInput placeholder="Enter your password" />
+          </LoginInputContainer>
+          <CustomButton startIcon={<FiLogIn size={18} />}>Enter</CustomButton>
         </LoginContent>
       </LoginContainer>
     </>
