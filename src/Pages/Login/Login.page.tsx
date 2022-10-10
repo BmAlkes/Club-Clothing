@@ -13,7 +13,6 @@ import {
   LoginSubtitle
 } from './Login.styles'
 import CustomInput from '../../components/custom-input/CustomInput'
-import { isExternalModule } from 'typescript'
 import InputErrorMessage from '../../components/input-error-component/InputError'
 
 const Login = () => {

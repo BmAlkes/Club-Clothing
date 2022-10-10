@@ -5,7 +5,7 @@ import axios from 'axios'
 import Category from '../../types/category.types'
 import env from '../../config/env.config'
 
-//Styles
+// Styles
 import CategoryItem from '../category-item/category-item'
 import { CategoriesContainer, CategoriesContent } from './Categories.style'
 
@@ -29,8 +29,8 @@ const Categories = () => {
     <CategoriesContainer>
       <CategoriesContent>
         {categories.map((category) => (
-          <div>
-            <CategoryItem category={category} key={category.id} />
+          <div key={category.id}>
+            <CategoryItem category={category} />
           </div>
         ))}
       </CategoriesContent>

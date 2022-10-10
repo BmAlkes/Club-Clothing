@@ -1,18 +1,18 @@
 const Colors = {
-  primary: `#212529`,
+  primary: '#212529',
   text: {
-    white: `#f8f9fa`,
-    dark: `#343a40`
+    white: '#f8f9fa',
+    dark: '#343a40'
   },
   background: {
-    dark: `#212529`,
-    white: `#f8f9fa`
+    dark: '#212529',
+    white: '#f8f9fa'
   },
   input: {
-    background: `#E9ecef`,
-    placeholder: `#6c757d`
+    background: '#E9ecef',
+    placeholder: '#6c757d'
   },
-  error: `#ff6a6a`
+  error: '#ff6a6a'
 }
 
 export default Colors
