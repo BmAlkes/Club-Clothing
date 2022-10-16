@@ -14,11 +14,6 @@ import {
 import CustomInput from '../../components/custom-input/CustomInput'
 import InputErrorMessage from '../../components/input-error-component/InputError'
 
-interface LoginForm {
-  email: string
-  password: string
-}
-
 const Login = () => {
   const {
     register,
@@ -26,7 +21,7 @@ const Login = () => {
     handleSubmit
   } = useForm()
 
-  const handleSubmitPress = (data: LoginForm) => {
+  const handleSubmitPress = (data: any) => {
     console.log({ data })
   }
   console.log({ errors })
