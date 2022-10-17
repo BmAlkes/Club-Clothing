@@ -15,6 +15,9 @@ import CustomInput from '../../components/custom-input/CustomInput'
 import Header from '../../components/header/header'
 import InputErrorMessage from '../../components/input-error-component/InputError'
 import CustomButton from '../../components/custom-buttton/CustomButton'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth, db } from '../../config/firebase.config'
+import { addDoc, collection } from 'firebase/firestore'
 
 interface SignUpForm {
   name: string
@@ -34,8 +37,22 @@ const SignUp = () => {
 
   const watchPassword = watch('password')
 
-  const handleSubmitPress = (data: SignUpForm) => {
-    console.log({ data })
+  const handleSubmitPress = async (data: SignUpForm) => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+      await addDoc(collection(db, 'users'), {
+        id: userCredentials.user.uid,
+        fistName: data.name,
+        lastName: data.lastName,
+        email: userCredentials.user.email
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
