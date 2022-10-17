@@ -13,18 +13,45 @@ import {
 } from './Login.styles'
 import CustomInput from '../../components/custom-input/CustomInput'
 import InputErrorMessage from '../../components/input-error-component/InputError'
+import {
+  AuthError,
+  AuthErrorCodes,
+  signInWithEmailAndPassword
+} from 'firebase/auth'
+import { auth } from '../../config/firebase.config'
+
+interface LoginForm {
+  email: string
+  password: string
+}
 
 const Login = () => {
   const {
     register,
     formState: { errors },
-    handleSubmit
-  } = useForm()
+    handleSubmit,
+    setError
+  } = useForm<LoginForm>()
 
-  const handleSubmitPress = (data: any) => {
-    console.log({ data })
+  const handleSubmitPress = async (data: LoginForm) => {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+      console.log(userCredentials)
+    } catch (error) {
+      const errors = error as AuthError
+
+      if (errors.code === AuthErrorCodes.INVALID_PASSWORD) {
+        return setError('password', { type: 'mismatch' })
+      }
+      if (errors.code === AuthErrorCodes.USER_DELETED) {
+        return setError('email', { type: 'notFound' })
+      }
+    }
   }
-  console.log({ errors })
   return (
     <>
       <Header />
@@ -53,16 +80,23 @@ const Login = () => {
                 Please insert a validate email
               </InputErrorMessage>
             )}
+            {errors?.email?.type === 'notFound' && (
+              <InputErrorMessage>Email notFound</InputErrorMessage>
+            )}
           </LoginInputContainer>
           <LoginInputContainer>
             <p>Password</p>
             <CustomInput
               hasError={!!errors?.password}
               placeholder="Enter your password"
+              type="password"
               {...register('password', { required: true })}
             />
             {errors?.password?.type === 'required' && (
               <InputErrorMessage>Password required</InputErrorMessage>
+            )}
+            {errors?.password?.type === 'mismatch' && (
+              <InputErrorMessage>Password Invalid</InputErrorMessage>
             )}
           </LoginInputContainer>
           <CustomButton
