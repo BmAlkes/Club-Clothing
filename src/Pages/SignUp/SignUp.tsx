@@ -1,6 +1,13 @@
 import { useForm } from 'react-hook-form'
 import { FiLogIn } from 'react-icons/fi'
 import validator from 'validator'
+import {
+  AuthError,
+  AuthErrorCodes,
+  createUserWithEmailAndPassword
+} from 'firebase/auth'
+import { addDoc, collection } from 'firebase/firestore'
+import { auth, db } from '../../config/firebase.config'
 
 // styles
 import {
@@ -15,13 +22,6 @@ import CustomInput from '../../components/custom-input/CustomInput'
 import Header from '../../components/header/header'
 import InputErrorMessage from '../../components/input-error-component/InputError'
 import CustomButton from '../../components/custom-buttton/CustomButton'
-import {
-  AuthError,
-  AuthErrorCodes,
-  createUserWithEmailAndPassword
-} from 'firebase/auth'
-import { auth, db } from '../../config/firebase.config'
-import { addDoc, collection } from 'firebase/firestore'
 
 interface SignUpForm {
   name: string

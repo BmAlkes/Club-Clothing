@@ -1,5 +1,5 @@
 interface User {
-  fistName: string
+  firstName: string
   lastName: string
   email: string
   provider: 'firebase' | 'google'
