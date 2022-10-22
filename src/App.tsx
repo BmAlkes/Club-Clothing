@@ -10,6 +10,7 @@ import Home from './Pages/Home/home.page'
 import Login from './Pages/Login/Login.page'
 import SignUp from './Pages/SignUp/SignUp'
 import { userConverter } from './converters/firebase.converters'
+import Loading from './components/loading/loading'
 
 const App: FunctionComponent = () => {
   const [isInitialized, setInitialState] = useState(true)
@@ -37,7 +38,7 @@ const App: FunctionComponent = () => {
     return setInitialState(false)
   })
 
-  if (isInitialized) return null
+  if (isInitialized) return <Loading />
 
   return (
     <BrowserRouter>
