@@ -22,6 +22,9 @@ import CustomInput from '../../components/custom-input/CustomInput'
 import Header from '../../components/header/header'
 import InputErrorMessage from '../../components/input-error-component/InputError'
 import CustomButton from '../../components/custom-buttton/CustomButton'
+import { useContext, useEffect } from 'react'
+import { UserContext } from '../../contexts/userContext'
+import { useNavigate } from 'react-router-dom'
 
 interface SignUpForm {
   name: string
@@ -41,6 +44,15 @@ const SignUp = () => {
   } = useForm<SignUpForm>()
 
   const watchPassword = watch('password')
+
+  const { isAutheticated } = useContext(UserContext)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAutheticated) {
+      navigate('/')
+    }
+  }, [isAutheticated])
 
   const handleSubmitPress = async (data: SignUpForm) => {
     try {
