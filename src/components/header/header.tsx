@@ -25,6 +25,9 @@ const Header = () => {
   const handleSignUp = () => {
     navigate('/Signup')
   }
+  const handleExplore = () => {
+    navigate('/Explore')
+  }
   console.log(currentUser)
   return (
     <HeaderContainer>
@@ -35,7 +38,7 @@ const Header = () => {
             <HeaderItem>{`Welcome ${currentUser?.firstName}`}</HeaderItem>
           </>
         )}
-        <HeaderItem>Explorer</HeaderItem>
+        <HeaderItem onClick={handleExplore}>Explorer</HeaderItem>
         {!isAutheticated && (
           <>
             <HeaderItem onClick={handleClick}>Login</HeaderItem>

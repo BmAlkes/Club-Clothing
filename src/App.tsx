@@ -11,6 +11,7 @@ import Login from './Pages/Login/Login.page'
 import SignUp from './Pages/SignUp/SignUp'
 import { userConverter } from './converters/firebase.converters'
 import Loading from './components/loading/loading'
+import ExplorePage from './Pages/Explore/explore.page'
 
 const App: FunctionComponent = () => {
   const [isInitialized, setInitialState] = useState(true)
@@ -46,6 +47,7 @@ const App: FunctionComponent = () => {
         <Route path="/" element={<Home />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<SignUp />} />
+        <Route path="/Explore" element={<ExplorePage />} />
       </Routes>
     </BrowserRouter>
   )
