@@ -1,9 +1,9 @@
-import Category from '../types/category.types'
 import {
   DocumentData,
   QueryDocumentSnapshot,
   SnapshotOptions
 } from 'firebase/firestore'
+import Category from '../types/category.types'
 import User from '../types/user.type'
 
 export const categoryConverter = {
@@ -15,6 +15,7 @@ export const categoryConverter = {
     options: SnapshotOptions
   ): Category {
     const data = snapshot.data(options)
+
     return {
       id: data.id,
       displayName: data.displayName,
@@ -34,11 +35,12 @@ export const userConverter = {
     options: SnapshotOptions
   ): User {
     const data = snapshot.data(options)
+
     return {
       id: data.id,
+      email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
-      email: data.email,
       provider: data.provider
     }
   }

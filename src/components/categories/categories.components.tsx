@@ -1,39 +1,23 @@
-import { useState, useEffect } from 'react'
-import { getDocs, collection } from 'firebase/firestore'
-
+import { useState, useEffect, useContext } from 'react'
+import { CategoryContext } from '../../contexts/categoriesContext'
 // Utilities
 import Category from '../../types/category.types'
 
 // Styles
 import CategoryItem from '../category-item/category-item'
+import Loading from '../loading/loading'
 import { CategoriesContainer, CategoriesContent } from './Categories.style'
-import { db } from '../../config/firebase.config'
-import { categoryConverter } from '../../converters/firebase.converters'
 
 const Categories = () => {
-  const [categories, setCategories] = useState<Category[]>([])
+  const { fetchCategories, categories, isLoading } = useContext(CategoryContext)
 
-  const fecthCategories = async () => {
-    try {
-      const categoriesFromFireStore: Category[] = []
-      const querySnapshot = await getDocs(
-        collection(db, 'categories').withConverter(categoryConverter)
-      )
-
-      querySnapshot.forEach((doc) => {
-        categoriesFromFireStore.push(doc.data())
-      })
-      setCategories(categoriesFromFireStore)
-    } catch (error) {
-      console.log(error)
-    }
-  }
   useEffect(() => {
-    fecthCategories()
+    fetchCategories()
   }, [])
 
   return (
     <CategoriesContainer>
+      {isLoading && <Loading />}
       <CategoriesContent>
         {categories.map((category) => (
           <div key={category.id}>

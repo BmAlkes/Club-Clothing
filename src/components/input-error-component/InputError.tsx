@@ -1,6 +1,4 @@
 import React, { FunctionComponent } from 'react'
-import { Interface } from 'readline'
-
 // Styles
 import { InputErrorMessageContainer } from './input-error.styles'
 
