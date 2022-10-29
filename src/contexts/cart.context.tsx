@@ -1,29 +1,28 @@
 import { createContext, FunctionComponent, useState } from 'react'
-import CartProducts from '../types/cart.types'
+import CartProduct from '../types/cart.types'
 
 interface ICartContext {
   isVisible: boolean
-  toogleCart: () => void
-  products: CartProducts[]
+  products: CartProduct[]
+  toggleCart: () => void
 }
-interface Props {
-  children: React.ReactNode
-}
-const CartContext = createContext<ICartContext>({
+
+export const CartContext = createContext<ICartContext>({
   isVisible: false,
   products: [],
-  toogleCart: () => {}
+  toggleCart: () => {}
 })
 
-const CartContextProvider: React.FC<Props> = ({ children }) => {
+const CartContextProvider: FunctionComponent = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false)
-  const [products, seProducts] = useState<CartProducts[]>([])
-  const toogleCart = () => {
+  const [products] = useState<CartProduct[]>([])
+
+  const toggleCart = () => {
     setIsVisible((prevState) => !prevState)
   }
 
   return (
-    <CartContext.Provider value={{ isVisible, products, toogleCart }}>
+    <CartContext.Provider value={{ isVisible, products, toggleCart }}>
       {children}
     </CartContext.Provider>
   )

@@ -13,6 +13,7 @@ import { userConverter } from './converters/firebase.converters'
 import Loading from './components/loading/loading'
 import ExplorePage from './Pages/Explore/explore.page'
 import CategorieDetails from './Pages/Categorie details/categorie-details'
+import Cart from './components/cart/cart.component'
 
 const App: FunctionComponent = () => {
   const [isInitialized, setInitialState] = useState(true)
@@ -51,6 +52,7 @@ const App: FunctionComponent = () => {
         <Route path="/Explore" element={<ExplorePage />} />
         <Route path="/category/:id" element={<CategorieDetails />} />
       </Routes>
+      <Cart />
     </BrowserRouter>
   )
 }
