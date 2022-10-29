@@ -21,6 +21,9 @@ export const CategorieItemContainer = styled.div<CategorieItemContainerProps>`
   background-color: rgba(0, 0, 0, 0.3);
   background-blend-mode: color;
   background-image: ${(props) => `url(${props.backgroundImage}) `};
+  & :hover {
+    cursor: pointer;
+  }
 `
 
 export const CategoryName = styled.div`
