@@ -5,11 +5,6 @@ import Category from '../../types/category.types'
 import { db } from '../../config/firebase.config'
 import Loading from '../loading/loading'
 import { BiChevronLeft } from 'react-icons/bi'
-
-interface CategoryDetailsProps {
-  categoryId: string
-}
-
 import {
   IconContainer,
   Container,
@@ -18,6 +13,10 @@ import {
 } from './categorie-details'
 import ProductItem from '../product-item/product-item'
 import { useNavigate } from 'react-router-dom'
+
+interface CategoryDetailsProps {
+  categoryId: string
+}
 
 const CategorieDetailsComponent: FunctionComponent<CategoryDetailsProps> = ({
   categoryId
