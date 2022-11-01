@@ -1,4 +1,4 @@
-import { createContext, FunctionComponent, useMemo, useState } from 'react'
+import React, { createContext, useEffect, useMemo, useState } from 'react'
 import CartProduct from '../types/cart.types'
 import Product from '../types/product.type'
 
@@ -13,6 +13,9 @@ interface ICartContext {
   increaseProductQuanty: (productId: string) => void
   decreaseProductQuantity: (productId: string) => void
 }
+interface Props {
+  children: React.ReactNode
+}
 
 export const CartContext = createContext<ICartContext>({
   isVisible: false,
@@ -26,9 +29,21 @@ export const CartContext = createContext<ICartContext>({
   decreaseProductQuantity: () => {}
 })
 
-const CartContextProvider: FunctionComponent = ({ children }) => {
+const CartContextProvider: React.FC<Props> = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [products, setProducts] = useState<CartProduct[]>([])
+
+  useEffect(() => {
+    const productsFromLocalStorage = JSON.parse(
+      localStorage.getItem('cartProducts')!
+    )
+
+    setProducts(productsFromLocalStorage)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('cartProducts', JSON.stringify(products))
+  }, [products])
 
   const productsTotalPrice = useMemo(() => {
     return products.reduce((acc, currentProduct) => {
