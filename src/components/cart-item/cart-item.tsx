@@ -1,9 +1,7 @@
-import { emitWarning } from 'process'
 import React, { FunctionComponent, useContext } from 'react'
 import { AiOutlinePlus, AiOutlineMinus, AiOutlineClose } from 'react-icons/ai'
 import { CartContext } from '../../contexts/cart.context'
 import CartProducts from '../../types/cart.types'
-import { CartContainer } from '../cart/cart.styles'
 import {
   CartItemContainer,
   CartItemImage,
