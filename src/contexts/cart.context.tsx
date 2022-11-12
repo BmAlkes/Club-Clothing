@@ -12,6 +12,7 @@ interface ICartContext {
   removeProductsFromCart: (productId: string) => void
   increaseProductQuanty: (productId: string) => void
   decreaseProductQuantity: (productId: string) => void
+  clearProducts: () => void
 }
 interface Props {
   children: React.ReactNode
@@ -26,7 +27,8 @@ export const CartContext = createContext<ICartContext>({
   addProductToCart: () => {},
   removeProductsFromCart: () => {},
   increaseProductQuanty: () => {},
-  decreaseProductQuantity: () => {}
+  decreaseProductQuantity: () => {},
+  clearProducts: () => {}
 })
 
 const CartContextProvider: React.FC<Props> = ({ children }) => {
@@ -108,6 +110,10 @@ const CartContextProvider: React.FC<Props> = ({ children }) => {
         .filter((product) => product.quantity > 0)
     )
   }
+
+  const clearProducts = () => {
+    setProducts([])
+  }
   return (
     <CartContext.Provider
       value={{
@@ -119,7 +125,8 @@ const CartContextProvider: React.FC<Props> = ({ children }) => {
         increaseProductQuanty,
         decreaseProductQuantity,
         productsTotalPrice,
-        productsCount
+        productsCount,
+        clearProducts
       }}>
       {children}
     </CartContext.Provider>
