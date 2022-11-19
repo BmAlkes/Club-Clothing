@@ -22,14 +22,15 @@ import Cart from './components/cart/cart.component'
 import AuthenticationGuard from './guards/Authenticantion.guards'
 import PaymentConfirmationPage from './Pages/Payment-confirmation/PaymentConfirmation'
 import { loginUser, logout } from './Store/reducers/user/user.actions'
+import { useAppSelector } from './components/hooks/redus.hooks'
 
 const App: FunctionComponent = () => {
   const [isInitializing, setIsInitializing] = useState(true)
 
   const dispatch = useDispatch()
 
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   )
 
   useEffect(() => {

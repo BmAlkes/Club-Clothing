@@ -25,6 +25,7 @@ import CustomButton from '../../components/custom-buttton/CustomButton'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../components/hooks/redus.hooks'
 
 interface SignUpForm {
   name: string
@@ -45,8 +46,8 @@ const SignUp = () => {
 
   const watchPassword = watch('password')
 
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   )
 
   const navigate = useNavigate()
