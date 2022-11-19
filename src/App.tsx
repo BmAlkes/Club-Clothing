@@ -1,60 +1,75 @@
 import { onAuthStateChanged } from 'firebase/auth'
-import { FunctionComponent, useContext, useState } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { auth, db } from './config/firebase.config'
-import { UserContext } from './contexts/userContext'
-import { getDocs, query, collection, where } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+import { useDispatch, useSelector } from 'react-redux'
 
 // Pages
-import Home from './Pages/Home/home.page'
-import Login from './Pages/Login/Login.page'
-import SignUp from './Pages/SignUp/SignUp'
-import { userConverter } from './converters/firebase.converters'
-import Loading from './components/loading/loading'
+import HomePage from './Pages/Home/home.page'
+import LoginPage from './Pages/Login/Login.page'
+import SignUpPage from './Pages/SignUp/SignUp'
 import ExplorePage from './Pages/Explore/explore.page'
-import CategorieDetails from './Pages/Categorie details/categorie-details'
-import Cart from './components/cart/cart.component'
 import CheckoutPage from './Pages/Checkout/checkout'
+
+// Utilities
+import { auth, db } from './config/firebase.config'
+import { userConverter } from './converters/firebase.converters'
+
+// Components
+import Loading from './components/loading/loading'
+import CategoryDetailsPage from './Pages/Categorie details/categorie-details'
+import Cart from './components/cart/cart.component'
 import AuthenticationGuard from './guards/Authenticantion.guards'
-import PaymentConfirmation from './Pages/Payment-confirmation/PaymentConfirmation'
+import PaymentConfirmationPage from './Pages/Payment-confirmation/PaymentConfirmation'
 
 const App: FunctionComponent = () => {
-  const [isInitialized, setInitialState] = useState(true)
-  const { isAutheticated, loginUser, logoutUser } = useContext(UserContext)
+  const [isInitializing, setIsInitializing] = useState(true)
 
-  onAuthStateChanged(auth, async (user) => {
-    const isSigningOut = isAutheticated && !user
+  const dispatch = useDispatch()
 
-    if (isSigningOut) {
-      logoutUser()
-      return setInitialState(false)
-    }
-    const isSignIn = !isAutheticated && user
-    if (isSignIn) {
-      const querySnapshot = await getDocs(
-        query(
-          collection(db, 'users').withConverter(userConverter),
-          where('id', '==', user.uid)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      const isSigningOut = isAuthenticated && !user
+
+      if (isSigningOut) {
+        dispatch({ type: 'LOGOUT_USER' })
+
+        return setIsInitializing(false)
+      }
+
+      const isSigningIn = !isAuthenticated && user
+
+      if (isSigningIn) {
+        const querySnapshot = await getDocs(
+          query(
+            collection(db, 'users').withConverter(userConverter),
+            where('id', '==', user.uid)
+          )
         )
-      )
-      const userFromFireStore = querySnapshot.docs[0]?.data()
-      loginUser(userFromFireStore)
-      return setInitialState(false)
-    }
-    return setInitialState(false)
-  })
 
-  if (isInitialized) return <Loading />
+        const userFromFirestore = querySnapshot.docs[0]?.data()
+
+        dispatch({ type: 'LOGIN_USER', payload: userFromFirestore })
+
+        return setIsInitializing(false)
+      }
+
+      return setIsInitializing(false)
+    })
+  }, [dispatch])
+
+  if (isInitializing) return <Loading />
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Signup" element={<SignUp />} />
-        <Route path="/Explore" element={<ExplorePage />} />
-        <Route path="/category/:id" element={<CategorieDetails />} />
-        <Route path="/payment-confirmation" element={<PaymentConfirmation />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/category/:id" element={<CategoryDetailsPage />} />
         <Route
           path="/checkout"
           element={
@@ -63,7 +78,14 @@ const App: FunctionComponent = () => {
             </AuthenticationGuard>
           }
         />
+        <Route
+          path="/payment-confirmation"
+          element={<PaymentConfirmationPage />}
+        />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>
+
       <Cart />
     </BrowserRouter>
   )

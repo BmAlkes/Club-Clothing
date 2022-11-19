@@ -22,9 +22,9 @@ import CustomInput from '../../components/custom-input/CustomInput'
 import Header from '../../components/header/header'
 import InputErrorMessage from '../../components/input-error-component/InputError'
 import CustomButton from '../../components/custom-buttton/CustomButton'
-import { useContext, useEffect } from 'react'
-import { UserContext } from '../../contexts/userContext'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 interface SignUpForm {
   name: string
@@ -45,14 +45,17 @@ const SignUp = () => {
 
   const watchPassword = watch('password')
 
-  const { isAutheticated } = useContext(UserContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
+
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isAutheticated) {
+    if (isAuthenticated) {
       navigate('/')
     }
-  }, [isAutheticated])
+  }, [isAuthenticated])
 
   const handleSubmitPress = async (data: SignUpForm) => {
     try {

@@ -21,9 +21,9 @@ import {
 } from 'firebase/auth'
 import { auth, googleProvider, db } from '../../config/firebase.config'
 import { getDocs, collection, query, where, addDoc } from 'firebase/firestore'
-import { useEffect, useContext } from 'react'
-import { UserContext } from '../../contexts/userContext'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 interface LoginForm {
   email: string
@@ -38,14 +38,16 @@ const Login = () => {
     setError
   } = useForm<LoginForm>()
 
-  const { isAutheticated } = useContext(UserContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isAutheticated) {
+    if (isAuthenticated) {
       navigate('/')
     }
-  }, [isAutheticated])
+  }, [isAuthenticated])
 
   const handleSubmitPress = async (data: LoginForm) => {
     try {
@@ -90,7 +92,6 @@ const Login = () => {
           provider: 'google'
         })
       }
-      console.log({ user })
     } catch (err) {
       console.log({ err })
     }

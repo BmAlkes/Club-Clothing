@@ -37,13 +37,13 @@ const PaymentConfirmation: FunctionComponent = () => {
       <Header />
       <PaymentConfirmationContainer>
         <PaymentConfirmationContent>
-          {status == 'true' && (
+          {status === 'true' && (
             <>
               <AiOutlineCheckCircle size={120} color={Colors.sucess} />
               <p>Your purchase has been successfully completed</p>
             </>
           )}
-          {(status == 'false' || isCanceled) && (
+          {(status === 'false' || isCanceled) && (
             <>
               <AiOutlineCloseCircle size={120} color={Colors.error} />
               <p>There was an error when checking out, please try again</p>
