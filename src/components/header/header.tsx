@@ -15,6 +15,7 @@ import {
   HeaderItem,
   HeaderTitle
 } from './Header.styles'
+import { logout } from '../../Store/reducers/user/user.actions'
 
 const Header = () => {
   const navigate = useNavigate()
@@ -44,7 +45,7 @@ const Header = () => {
   }
 
   const handleSignOutClick = () => {
-    dispatch({ type: 'LOGOUT_USER' })
+    dispatch(logout())
     signOut(auth)
   }
 

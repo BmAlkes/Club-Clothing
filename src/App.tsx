@@ -21,6 +21,7 @@ import CategoryDetailsPage from './Pages/Categorie details/categorie-details'
 import Cart from './components/cart/cart.component'
 import AuthenticationGuard from './guards/Authenticantion.guards'
 import PaymentConfirmationPage from './Pages/Payment-confirmation/PaymentConfirmation'
+import { loginUser, logout } from './Store/reducers/user/user.actions'
 
 const App: FunctionComponent = () => {
   const [isInitializing, setIsInitializing] = useState(true)
@@ -36,7 +37,7 @@ const App: FunctionComponent = () => {
       const isSigningOut = isAuthenticated && !user
 
       if (isSigningOut) {
-        dispatch({ type: 'LOGOUT_USER' })
+        dispatch(logout())
 
         return setIsInitializing(false)
       }
@@ -53,7 +54,7 @@ const App: FunctionComponent = () => {
 
         const userFromFirestore = querySnapshot.docs[0]?.data()
 
-        dispatch({ type: 'LOGIN_USER', payload: userFromFirestore })
+        dispatch(loginUser(userFromFirestore))
 
         return setIsInitializing(false)
       }
